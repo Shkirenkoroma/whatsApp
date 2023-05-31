@@ -1,11 +1,12 @@
-import { FC, ChangeEvent } from 'react';
-import * as S from './index.styles';
+import { FC, ChangeEvent } from 'react'
+import * as S from './index.styles'
 
 interface IPropsInput {
-  textholder: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  error: boolean;
+  textholder: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  value: string
+  error?: boolean
+  style?: any
 }
 
 export const Input: FC<IPropsInput> = ({
@@ -13,6 +14,7 @@ export const Input: FC<IPropsInput> = ({
   value,
   textholder,
   error,
+  style,
 }): JSX.Element => {
   return (
     <S.Input
@@ -21,6 +23,7 @@ export const Input: FC<IPropsInput> = ({
       onChange={onChange}
       value={value}
       error={error}
+      style={style}
     />
-  );
-};
+  )
+}

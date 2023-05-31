@@ -7,12 +7,13 @@ export const LoginWindow = styled.div`
   justify-content: center;
   gap: 15px;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px;
   height: 200px;
-  border: 1px solid green;
   border-radius: 10px;
   text-align: center;
   padding:10px;
+  font-family: 'Kaushan Script', cursive;
+  background-color:#fff;
 `;
 
 export const Title = styled.span`
