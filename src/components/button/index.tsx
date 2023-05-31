@@ -12,7 +12,12 @@ const Button: FC<IPropsButton> = ({
   buttonName,
   style,
 }): JSX.Element => {
-  return <S.ButtonStyle onClick={onClick}>{buttonName}</S.ButtonStyle>
+
+  return (
+    <S.ButtonStyle onClick={onClick} style={style}>
+      {buttonName}
+    </S.ButtonStyle>
+  )
 }
 
 export default Button

@@ -28,6 +28,7 @@ const Login: FC = (): JSX.Element => {
       setError(false)
     }
   }
+  
   const inputHandlerToken = (e: ChangeEvent<HTMLInputElement>) => {
     setApiToken(e.target.value)
     if (e.target.value) {

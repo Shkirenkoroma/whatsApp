@@ -16,6 +16,7 @@ export const Input: FC<IPropsInput> = ({
   error,
   style,
 }): JSX.Element => {
+  
   return (
     <S.Input
       type="text"

@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { addNewContact, selectContact } from 'redux/slices/contactSlice'
 import Button from 'components/button'
 import { Input } from 'components/input'
-import { addNewContact, selectContact } from 'redux/slices/contactSlice'
 import * as S from './index.styles'
 
 interface IState {
@@ -19,11 +19,8 @@ const Main: FC = (): JSX.Element => {
   const [numberInput, setNumberInput] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const dispatch = useDispatch()
-  const listContacts =
-    useSelector((state: IContactSlice) => state?.contacts?.newContacts) ?? []
-  const chatContact = useSelector(
-    (state: IContactSlice) => state.contacts.selectContact,
-  )
+  const listContacts = useSelector((state: IContactSlice) => state?.contacts?.newContacts) ?? []
+  const chatContact = useSelector((state: IContactSlice) => state.contacts.selectContact) ?? ''
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -92,16 +89,18 @@ const Main: FC = (): JSX.Element => {
           left: '461px',
           maxWidth: '600px',
           backgroundColor: 'transparent',
-          // border:'none',
+          border: 'none',
           fontSize: '24px',
           color: '#fff',
         }}
       />
-      <Button
-        onClick={sendMessageHandler}
-        buttonName="Отправить"
-        style={{ float: 'right', marginTop: '25px' }}
-      ></Button>
+      {message && (
+        <Button
+          onClick={sendMessageHandler}
+          buttonName="Отправить"
+          style={{ float: 'right', marginTop: '30px' }}
+        ></Button>
+      )}
     </S.Container>
   )
 }
