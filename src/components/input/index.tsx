@@ -9,14 +9,13 @@ interface IPropsInput {
   style?: any
 }
 
-export const Input: FC<IPropsInput> = ({
+const Input: FC<IPropsInput> = ({
   onChange,
   value,
   textholder,
   error,
   style,
 }): JSX.Element => {
-  
   return (
     <S.Input
       type="text"
@@ -28,3 +27,5 @@ export const Input: FC<IPropsInput> = ({
     />
   )
 }
+
+export default Input

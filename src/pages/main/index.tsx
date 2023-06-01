@@ -1,14 +1,14 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { addNewContact, selectContact } from 'redux/slices/contactSlice'
+import { addNewContact, selectContact, getMessage } from 'redux/slices/contactSlice'
 import Button from 'components/button'
-import { Input } from 'components/input'
+import  Input  from 'components/input'
 import * as S from './index.styles'
 
 interface IState {
   newContacts: string[]
-  selectContact: string
+  chatContact: string
 }
 
 interface IContactSlice {
@@ -19,32 +19,34 @@ const Main: FC = (): JSX.Element => {
   const [numberInput, setNumberInput] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const dispatch = useDispatch()
-  const listContacts = useSelector((state: IContactSlice) => state?.contacts?.newContacts) ?? []
-  const chatContact = useSelector((state: IContactSlice) => state.contacts.selectContact) ?? ''
+  const { newContacts, chatContact } = useSelector((state: IContactSlice) => state?.contacts)
   const navigate = useNavigate()
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     navigate('/')
+    localStorage.removeItem('user')
   }
 
-  const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const inputHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setNumberInput(e.target.value)
   }
-
-  const clickHandler = () => {
+ 
+  const clickHandler = (): void => {
     dispatch(addNewContact(numberInput))
   }
 
-  const listItemHandler = (newContact: string) => {
+  const listItemHandler = (newContact: string): void => {
     dispatch(selectContact(newContact))
   }
 
-  const messageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const messageHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setMessage(e.target.value)
   }
 
-  const sendMessageHandler = () => {
-    console.log('Отправить сообщение')
+  const sendMessageHandler = (): void => {
+    dispatch(getMessage(message))
+    console.log('getMessage')
+    console.log('getMessage', getMessage(message))
   }
 
   return (
@@ -71,7 +73,7 @@ const Main: FC = (): JSX.Element => {
           <Button onClick={clickHandler} buttonName="Добавить" />
         </S.Form>
         <S.Ul>
-          {listContacts.map((el: string, index: number) => (
+          {newContacts.map((el: string, index: number) => (
             <S.Li key={index} onClick={() => listItemHandler(el)}>
               {el}
             </S.Li>
@@ -87,7 +89,7 @@ const Main: FC = (): JSX.Element => {
           position: 'relative',
           top: '28px',
           left: '461px',
-          maxWidth: '600px',
+          maxWidth: '539px',
           backgroundColor: 'transparent',
           border: 'none',
           fontSize: '24px',
@@ -98,7 +100,7 @@ const Main: FC = (): JSX.Element => {
         <Button
           onClick={sendMessageHandler}
           buttonName="Отправить"
-          style={{ float: 'right', marginTop: '30px' }}
+          style={{ float: 'right', marginTop: '30px', marginRight: '30px' }}
         ></Button>
       )}
     </S.Container>

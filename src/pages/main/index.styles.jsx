@@ -49,7 +49,7 @@ export const Ul = styled.ul`
   padding:0 10px;
 `
 export const Li = styled.li`
-  margin-bottom:20px;
+  padding:10px 0 10px 0;
   color:#fff;
   list-style-type:none;
     

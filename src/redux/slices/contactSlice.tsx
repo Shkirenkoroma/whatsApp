@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IState {
   newContacts: string[]
-  selectContact: string
+  chatContact: string
+  message: string
 }
 
 const initialState = {
   newContacts: [],
-  selectContact: '',
+  chatContact: '',
+  message: '',
 }
 
 export const contactSlice = createSlice({
@@ -18,10 +20,13 @@ export const contactSlice = createSlice({
       state.newContacts.push(action.payload)
     },
     selectContact: (state: IState, action: PayloadAction<string>) => {
-      state.selectContact = action.payload
+      state.chatContact = action.payload
+    },
+    getMessage: (state: IState, action: PayloadAction<string>) => {
+      state.message = action.payload
     },
   },
 })
 
-export const { addNewContact, selectContact } = contactSlice.actions
+export const { addNewContact, selectContact, getMessage } = contactSlice.actions
 export default contactSlice.reducer
