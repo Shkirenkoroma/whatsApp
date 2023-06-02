@@ -1,14 +1,20 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { addNewContact, selectContact, getMessage } from 'redux/slices/contactSlice'
+import {
+  addNewContact,
+  selectContact,
+  sendBodyMessage,
+  recieveBodyMessage,
+} from 'redux/slices/contactSlice'
 import Button from 'components/button'
-import  Input  from 'components/input'
+import Input from 'components/input'
 import * as S from './index.styles'
 
 interface IState {
   newContacts: string[]
   chatContact: string
+  recieveMessage: string[]
 }
 
 interface IContactSlice {
@@ -19,7 +25,9 @@ const Main: FC = (): JSX.Element => {
   const [numberInput, setNumberInput] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const dispatch = useDispatch()
-  const { newContacts, chatContact } = useSelector((state: IContactSlice) => state?.contacts)
+  const { newContacts, chatContact, recieveMessage } = useSelector(
+    (state: IContactSlice) => state?.contacts,
+  )
   const navigate = useNavigate()
 
   const handleClick = (): void => {
@@ -30,7 +38,7 @@ const Main: FC = (): JSX.Element => {
   const inputHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setNumberInput(e.target.value)
   }
- 
+
   const clickHandler = (): void => {
     dispatch(addNewContact(numberInput))
   }
@@ -44,10 +52,19 @@ const Main: FC = (): JSX.Element => {
   }
 
   const sendMessageHandler = (): void => {
-    dispatch(getMessage(message))
-    console.log('getMessage')
-    console.log('getMessage', getMessage(message))
+    dispatch(sendBodyMessage(message))
   }
+
+  useEffect(() => {
+    const checkRecieveMessage = setInterval(
+      () => dispatch(recieveBodyMessage()),
+      3000,
+    )
+
+    return () => {
+      clearInterval(checkRecieveMessage)
+    }
+  }, [])
 
   return (
     <S.Container>
@@ -80,7 +97,11 @@ const Main: FC = (): JSX.Element => {
           ))}
         </S.Ul>
       </S.Aside>
-      <S.ChatWindow />
+      <S.ChatWindow>
+        {recieveMessage.map((message, index) => (
+          <S.RecieveMessage key={index}>{message}</S.RecieveMessage>
+        ))}
+      </S.ChatWindow>
       <Input
         onChange={messageHandler}
         value={message}

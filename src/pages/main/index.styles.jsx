@@ -40,6 +40,9 @@ export const ChatWindow = styled.div`
   max-width: 741px;
   height: 500px;
   background-image: url(${background});
+  display: flex;
+    flex-direction: column;
+    overflow: overlay;
 `;
 
 export const Form = styled.form`
@@ -63,4 +66,15 @@ export const Li = styled.li`
 export const ChatContact = styled.span`
   font-size:24px;
   color:#fff;
+ 
+`
+
+export const RecieveMessage = styled.span`
+color: #fff;
+    padding: 6px 30px;
+    background-color: #877a7a;
+    border-radius: 10px;
+    width: 8%;
+    margin-bottom: 35px;
+    word-wrap:break-word;
 `
